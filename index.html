@@ -1,32 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name = "viewport" content = "width= device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Neutro Sample</title>
-  <link rel = "stylesheet" href = "style.css">
+  <link rel="stylesheet" href="style.css">
+  <!-- Include the AWS SDK -->
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.813.0.min.js"></script>
+  <script>
+    // Configure the AWS SDK
+    AWS.config.update({
+      accessKeyId: 'AKIAYS2NWFGFWFZMSRPD',
+      secretAccessKey: '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',
+      region: 'us-east-1'
+    });
+
+    // Function to upload a file to S3
+    function uploadFileToS3(file) {
+      const s3 = new AWS.S3();
+
+      // Replace 'YOUR_BUCKET_NAME' with your actual bucket name
+      const params = {
+        Bucket: 'YOUR_BUCKET_NAME',
+        Key: file.name,
+        Body: file,
+        ACL: 'private' // Change to 'public-read' if you want the file to be publicly accessible
+      };
+
+      s3.upload(params, function(err, data) {
+        if (err) {
+          console.error('Error uploading to S3:', err);
+          return;
+        }
+        console.log('Upload successful:', data);
+        // You can update your UI here to show the uploaded image
+      });
+    }
+  </script>
 </head>
 <body>
-  <div class = "hero">
-
-    <! so this piece is essentially the upload-->
-    <label for = "input-file" id = "drop-area">
-      <input type ="file" accept ="image/*" id = "input-file" hidden>
-
-      <! in this "div", we will display the uploaded image.-->
-      <div id= "img-view">
-
+  <div class="hero">
+    <!-- This piece is essentially the upload -->
+    <label for="input-file" id="drop-area">
+      <input type="file" accept="image/*" id="input-file" hidden>
+      <!-- In this "div", we will display the uploaded image. -->
+      <div id="img-view">
         <img src="icon.png">
         <p>Drag and drop or click here<br> to upload image</p>
         <span>Upload any images from desktop</span>
-        
-
       </div>
-
-
     </label>
-    <! so this piece is essentially the upload-->
-
+    <!-- This piece is essentially the upload -->
   </div>
-<script src="script.js"></script>
+  <!-- Include your custom script -->
+  <script src="script.js"></script>
 </body>
 </html>

@@ -4,13 +4,14 @@ const imageView = document.getElementById("img-view");
 
 inputFile.addEventListener("change", uploadImage);
 
-function uploadImage(){
-
-
-	let imgLink = URL.createObjectURL(inputFile.files[0]);
-	imageView.style.backgroundImage = `url(${imgLink})`; 
-	imageView.textContent = "";
+function uploadImage() {
+  let file = inputFile.files[0];
+  uploadFileToS3(file); // Call the function to upload to S3
+  let imgLink = URL.createObjectURL(file);
+  imageView.style.backgroundImage = `url(${imgLink})`;
+  imageView.textContent = "";
 }
+
 
 dropArea.addEventListener("dragover", function(e)){
 	e.preventDefault();
